@@ -94,6 +94,7 @@ public class login extends AppCompatActivity {
 
         if (sessionManager.getLogin()){
             startActivity(new Intent(getApplicationContext(), home.class));
+            finish();
         }
 
     }
