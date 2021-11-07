@@ -1,7 +1,7 @@
 package com.masoodahmad.i180755_i181579;
 
 public class contacts {
-    private String name, number;
+    private String name, number, testing;
 
     public contacts(String name, String number) {
         this.name = name;
