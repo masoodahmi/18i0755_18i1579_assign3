@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/background.xml" value="0.23425925925925925" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/calimagebck.xml" value="0.17" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/callhistop.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/chatbckground.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/chattop.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/circle.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/circle1.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/color2.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/ic_baseline_call_made_24.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/ic_outline_call_24.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/ic_outline_camera_alt_24.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/ic_outline_emoji_emotions_24.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/ic_outline_message_24.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/ic_outline_people_alt_24.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/side_nav_bar.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/signupbtn.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/styless.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/drawable/stylesss.xml" value="0.18831168831168832" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/activity_callhistory.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/activity_chatting.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/activity_home.xml" value="0.18" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/activity_login.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/activity_ongoingcall.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/activity_sign_up.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/callrv.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/chatssrow.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/contactsrow.xml" value="0.25" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/contactsrv.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/content_drawer.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/fragment_callfragment.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/fragment_gallery.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/fragment_home.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/fragment_homefragment.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/fragment_slideshow.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/homerv.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/row.xml" value="0.25" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/layout/row1.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/menu/activity_main_drawer.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/menu/bottomnav.xml" value="0.18903508771929825" />
+        <entry key="..\:/Users/Masood Ahmed/AndroidStudioProjects/i180755_i181579/app/src/main/res/menu/drawer.xml" value="0.18903508771929825" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

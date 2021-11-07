@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <item
+        android:id="@+id/navmsg"
+        android:icon="@drawable/ic_outline_message_24"
+        android:iconTint="#909090"
+        android:title="" />
+    <item
+        android:id="@+id/navcam"
+        android:icon="@drawable/ic_outline_camera_alt_24"
+        android:iconTint="#909090"
+        android:title="" />
+    <item
+        android:id="@+id/navcall"
+        android:icon="@drawable/ic_outline_call_24"
+        android:iconTint="#909090"
+        android:title="" />
+    <item
+        android:id="@+id/navpeople"
+        android:icon="@drawable/ic_outline_people_alt_24"
+        android:iconTint="#909090"
+        android:title="" />
+
+
+
+</menu>

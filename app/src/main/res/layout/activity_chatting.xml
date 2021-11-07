@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:weightSum="10"
+    >
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+
+        android:layout_weight="0.1"
+        android:layout_alignParentTop="true"
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chattop"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/chatbckbtn"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            android:padding="4dp"
+            />
+        <TextView
+            android:id="@+id/username"
+            android:layout_weight="8"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:text="1 new message"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+
+            />
+        <ImageView
+            android:id="@+id/callbtn"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_outline_call_24"
+            android:padding="4dp"
+            />
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_weight="9.8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/crv">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="0.1"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/chattop"
+
+        >
+        <ImageView
+            android:id="@+id/emo"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="9dp"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_outline_emoji_emotions_24"/>
+        <EditText
+            android:id="@+id/entermsg"
+            android:layout_toEndOf="@+id/emo"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:hint="Type you message"
+            android:textSize="15dp"
+            android:background="@drawable/chattop"
+            android:textColorHint="@color/white"/>
+        <ImageView
+            android:id="@+id/sendbtn"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/circle"
+            android:src="@drawable/ic_baseline_send_24"
+            android:padding="11dp"
+
+            />
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>
