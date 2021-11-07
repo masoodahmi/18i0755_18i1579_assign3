@@ -17,11 +17,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.cast.framework.SessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.io.ByteArrayOutputStream;
 
 public class login extends AppCompatActivity {
@@ -29,17 +29,20 @@ public class login extends AppCompatActivity {
     EditText logemail,logpass;
     ImageButton logbtn;
     private FirebaseAuth mAuth;
+    SManager sessionManager;
 
     @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sessionManager = new SManager(getApplicationContext());
         mAuth=FirebaseAuth.getInstance();
         reg=findViewById(R.id.registerbtn);
         logemail=findViewById(R.id.logemail);
         logpass=findViewById(R.id.logpass);
         logbtn=findViewById(R.id.logbtn);
+
         logbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +65,8 @@ public class login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            sessionManager.setLogin(true);
+                            sessionManager.setUsername(email);
                             Intent intent=new Intent(login.this, home.class);
                             startActivity(intent );
                             finish();
@@ -86,6 +91,10 @@ public class login extends AppCompatActivity {
                 finish();
             }
         });
+
+        if (sessionManager.getLogin()){
+            startActivity(new Intent(getApplicationContext(), home.class));
+        }
 
     }
 
