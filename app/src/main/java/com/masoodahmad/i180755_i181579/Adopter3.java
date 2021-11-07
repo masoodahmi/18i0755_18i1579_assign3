@@ -19,7 +19,6 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
         this.ls = ls;
         this.c = c;
     }
-
     @NonNull
     @Override
     public Adopter3.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
