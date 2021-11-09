@@ -1,19 +1,23 @@
 package com.masoodahmad.i180755_i181579;
 
+import android.net.Uri;
+
 public class users {
     String email,pass,name,age,gender;
+    Uri img;
     Integer usersid;
 
     public users(){
 
     }
 
-    public users(String email, String pass, String name, String age, String gender, Integer usersid) {
+    public users(String email, String pass, String name, String age, String gender, Uri img, Integer usersid) {
         this.email = email;
         this.pass = pass;
         this.name = name;
         this.age = age;
         this.gender = gender;
+        this.img = img;
         this.usersid = usersid;
     }
 
@@ -55,6 +59,14 @@ public class users {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public Uri getImg() {
+        return img;
+    }
+
+    public void setImg(Uri img) {
+        this.img = img;
     }
 
     public Integer getUsersid() {
