@@ -20,9 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUp extends AppCompatActivity {
-    TextView log;
+
     EditText signemail,signpass,signcofirmpass;
-    ImageButton signupbtn;
+    ImageButton createbtn;
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +30,15 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         mAuth=FirebaseAuth.getInstance();
-        log=findViewById(R.id.loginbtn);
         signemail=findViewById(R.id.signemail);
         signpass=findViewById(R.id.signpass);
         signcofirmpass=findViewById(R.id.signconfirmpass);
-        signupbtn=findViewById(R.id.signupbtn);
+        createbtn=findViewById(R.id.createbtn);
 
-        signupbtn.setOnClickListener(new View.OnClickListener() {
+        createbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(signpass.getText().toString().equals(signcofirmpass.getText().toString())  ){
+                if(signpass.getText().toString().equals(signcofirmpass.getText().toString()) ){
 //                    DbHelper dbh= new DbHelper(SignUp.this);
 //                    SQLiteDatabase db=dbh.getWritableDatabase();
 //                    ContentValues cv=new ContentValues();
@@ -48,37 +47,40 @@ public class SignUp extends AppCompatActivity {
 //                    db.insert(Database.users.tablename,null,cv);
 //                    db.close();
 //                    dbh.close();
-
                     String email=  signemail.getText().toString().trim();
                     String pass =  signpass.getText().toString().trim();
+                    String cpass =  signcofirmpass.getText().toString().trim();
                     mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                users user=new users(email,pass,"masood","21","M",1);
-                                FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser()
-                                .getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            Intent intent=new Intent(SignUp.this, login.class);
-                                            startActivity(intent );
-                                            finish();
-                                            Toast.makeText(SignUp.this, "Sign Up Successfull!!!", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else{
-                                            Toast.makeText(SignUp.this, "Sign Up UnSuccessfull!!!", Toast.LENGTH_SHORT).show();
+                                if(email.isEmpty()){
+                                    signemail.setError("This should not be empty");
+                                    return;
+                                }
+                                if(pass.isEmpty()){
+                                    signpass.setError("This should not be empty");
+                                    return;
+                                }
+                                if(cpass.isEmpty()){
+                                    signcofirmpass.setError("This should not be empty");
+                                    return;
+                                }
 
-                                        }
+                                Intent intent=new Intent(getApplicationContext(), CreateProfile.class);
+                                intent.putExtra("email",signemail.getText().toString().trim());
+                                intent.putExtra("pass",signpass.getText().toString().trim());
+                                startActivity(intent );
+                                finish();
                                     }
-                                });
-                            }
                             else{
                                 Toast.makeText(SignUp.this, "Sign Up UnSuccessfull!!!", Toast.LENGTH_SHORT).show();
 
                             }
                         }
                     });
+
+
                 }
                 else {
                     Toast.makeText(SignUp.this, "Password Does not match!!!!", Toast.LENGTH_SHORT).show();
@@ -90,14 +92,6 @@ public class SignUp extends AppCompatActivity {
 
 
 
-        log.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(SignUp.this, login.class);
-                startActivity(intent );
-                finish();
-            }
-        });
 
     }
 }

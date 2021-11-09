@@ -79,7 +79,7 @@
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:id="@+id/signupbtn"
+                android:id="@+id/createbtn"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:background="@drawable/signupbtn" />
@@ -103,16 +103,7 @@
 
 
 
-            <TextView
-                android:id="@+id/loginbtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="125dp"
-                android:layout_marginTop="12dp"
-                android:text="Login"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+
 
 
         </RelativeLayout>
