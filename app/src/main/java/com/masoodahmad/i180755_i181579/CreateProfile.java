@@ -57,7 +57,7 @@ public class CreateProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 StorageReference strRef= FirebaseStorage.getInstance().getReference();
-                strRef=strRef.child("pictures/xyz.jpg");
+                strRef=strRef.child("pictures/"+email+".jpg");
                 strRef.putFile(getimg).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
