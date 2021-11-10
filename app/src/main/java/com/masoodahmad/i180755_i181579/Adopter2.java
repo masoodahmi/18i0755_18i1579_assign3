@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -31,12 +33,16 @@ public class Adopter2 extends RecyclerView.Adapter<Adopter2.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adopter2.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.name.setText(ls.get(position).getName());
         holder.phnum.setText(ls.get(position).getNumber());
-
-
-
+        String imgpath = ls.get(position).getImg().toString();
+        if (imgpath.substring(0, 5).equals("https")) {
+            Picasso.get().load(ls.get(position).getImg()).into(holder.civ);
+        }
+        else{
+            holder.civ.setImageURI(ls.get(position).getImg());
+        }
 
     }
 
@@ -47,12 +53,15 @@ public class Adopter2 extends RecyclerView.Adapter<Adopter2.MyViewHolder> {
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name,phnum;
+        CircleImageView civ;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name=itemView.findViewById(R.id.name);
             phnum=itemView.findViewById(R.id.phnum);
+            civ = itemView.findViewById(R.id.pic);
+
 
         }
     }

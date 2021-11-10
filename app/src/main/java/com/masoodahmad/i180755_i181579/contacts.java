@@ -1,11 +1,24 @@
 package com.masoodahmad.i180755_i181579;
 
-public class contacts {
-    private String name, number, testing;
+import android.net.Uri;
 
-    public contacts(String name, String number) {
+public class contacts {
+    private String name, number;
+
+    public Uri getImg() {
+        return img;
+    }
+
+    public void setImg(Uri img) {
+        this.img = img;
+    }
+
+    Uri img;
+
+    public contacts(String name, String number, Uri image) {
         this.name = name;
         this.number = number;
+        this.img = image;
     }
 
     public String getName() {

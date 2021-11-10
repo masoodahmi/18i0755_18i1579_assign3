@@ -2,6 +2,7 @@ package com.masoodahmad.i180755_i181579;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -21,6 +22,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +39,10 @@ import java.util.List;
 public class contactsfragment extends Fragment {
     List<contacts>ls;
     RecyclerView rv;
-
+    FirebaseDatabase database;
+    DatabaseReference ref;
+    Adopter2  adapter;
+    RecyclerView.LayoutManager lm;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -80,13 +90,37 @@ public class contactsfragment extends Fragment {
         rv=view.findViewById(R.id.rvvv);
         ls=new ArrayList<>();
 
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference("users");
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot dSnapshot:snapshot.getChildren()){
+                    System.out.println(dSnapshot.child("img").getValue().toString());
+                    Uri picture = Uri.parse(dSnapshot.child("img").getValue().toString());
+                    ls.add(0, new contacts(dSnapshot.child("name").getValue().toString(),
+                            dSnapshot.child("phno").getValue().toString(), picture));
+                }
+                adapter =new Adopter2(ls,getContext());
+                lm= new LinearLayoutManager( getContext());
+                rv.setLayoutManager(lm);
+                rv.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         checkPermission();
-        Adopter2  adapter =new Adopter2(ls,getContext());
-        RecyclerView.LayoutManager lm= new LinearLayoutManager( getContext());
+
+        adapter =new Adopter2(ls,getContext());
+        lm= new LinearLayoutManager( getContext());
         rv.setLayoutManager(lm);
         rv.setAdapter(adapter);
-
 
 
 
@@ -132,7 +166,11 @@ public class contactsfragment extends Fragment {
                 Cursor pc=getActivity().getContentResolver().query(uriPhone,null,selection,new String[]{id},null);
                  if(pc.moveToNext()){
                      @SuppressLint("Range") String number= pc.getString(pc.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                    ls.add(new contacts(name,number));
+                     Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
+                             + "://" + getContext().getResources().getResourcePackageName(R.drawable.ic_baseline_person_24)
+                             + '/' + getContext().getResources().getResourceTypeName(R.drawable.ic_baseline_person_24)
+                             + '/' + getContext().getResources().getResourceEntryName(R.drawable.ic_baseline_person_24) );
+                    ls.add(new contacts(name,number, imageUri));
                     pc.close();
 
 
