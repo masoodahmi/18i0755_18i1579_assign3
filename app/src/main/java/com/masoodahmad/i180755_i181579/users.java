@@ -3,20 +3,21 @@ package com.masoodahmad.i180755_i181579;
 import android.net.Uri;
 
 public class users {
-    String email,pass,name,age,gender,img;
+    String email,pass,name,age,gender,img,phno;
     Integer usersid;
 
     public users(){
 
     }
 
-    public users(String email, String pass, String name, String age, String gender, String img) {
+    public users(String email, String pass, String name, String age, String gender, String img, String phno) {
         this.email = email;
         this.pass = pass;
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.img = img;
+        this.phno = phno;
     }
 
     public String getEmail() {
@@ -65,6 +66,14 @@ public class users {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public String getPhno() {
+        return phno;
+    }
+
+    public void setPhno(String phno) {
+        this.phno = phno;
     }
 
     public Integer getUsersid() {

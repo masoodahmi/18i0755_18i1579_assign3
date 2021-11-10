@@ -47,25 +47,27 @@ public class SignUp extends AppCompatActivity {
 //                    db.insert(Database.users.tablename,null,cv);
 //                    db.close();
 //                    dbh.close();
+
                     String email=  signemail.getText().toString().trim();
                     String pass =  signpass.getText().toString().trim();
                     String cpass =  signcofirmpass.getText().toString().trim();
+                    if(email.isEmpty()){
+                        signemail.setError("This should not be empty");
+                        return;
+                    }
+                    if(pass.isEmpty()){
+                        signpass.setError("This should not be empty");
+                        return;
+                    }
+                    if(cpass.isEmpty()){
+                        signcofirmpass.setError("This should not be empty");
+                        return;
+                    }
                     mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                if(email.isEmpty()){
-                                    signemail.setError("This should not be empty");
-                                    return;
-                                }
-                                if(pass.isEmpty()){
-                                    signpass.setError("This should not be empty");
-                                    return;
-                                }
-                                if(cpass.isEmpty()){
-                                    signcofirmpass.setError("This should not be empty");
-                                    return;
-                                }
+
 
                                 Intent intent=new Intent(getApplicationContext(), CreateProfile.class);
                                 intent.putExtra("email",signemail.getText().toString().trim());

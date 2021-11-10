@@ -29,7 +29,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CreateProfile extends AppCompatActivity {
     CircleImageView img;
-    EditText name,age,gender;
+    EditText name,age,gender,phno;
     TextView log;
     FirebaseDatabase database;
     DatabaseReference ref;
@@ -45,6 +45,7 @@ public class CreateProfile extends AppCompatActivity {
         name=findViewById(R.id.username);
         age=findViewById(R.id.userage);
         gender=findViewById(R.id.usergender);
+        phno=findViewById(R.id.userphno);
         img=findViewById(R.id.uplaodimg);
         database=FirebaseDatabase.getInstance();
         ref=database.getReference("users");
@@ -66,7 +67,7 @@ public class CreateProfile extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 dp=uri.toString();
                                 ref.push().setValue(new users(email,pass,name.getText().toString().trim(),age.getText().toString().trim()
-                                        ,gender.getText().toString().trim(),dp));
+                                        ,gender.getText().toString().trim(),dp,phno.getText().toString().trim()));
                                 startActivity(new Intent(getApplicationContext(),login.class));
                                 finish();
                             }
