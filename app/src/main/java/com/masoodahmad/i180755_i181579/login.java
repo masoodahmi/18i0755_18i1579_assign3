@@ -2,6 +2,7 @@ package com.masoodahmad.i180755_i181579;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -10,6 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +24,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.ByteArrayOutputStream;
 
 public class login extends AppCompatActivity {
@@ -30,7 +38,8 @@ public class login extends AppCompatActivity {
     ImageButton logbtn;
     private FirebaseAuth mAuth;
     SManager sessionManager;
-
+    FirebaseDatabase db;
+    DatabaseReference ref;
     @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +51,8 @@ public class login extends AppCompatActivity {
         logemail=findViewById(R.id.logemail);
         logpass=findViewById(R.id.logpass);
         logbtn=findViewById(R.id.logbtn);
-
+        db=FirebaseDatabase.getInstance();
+        ref=db.getReference("users");
         logbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +77,27 @@ public class login extends AppCompatActivity {
                         if(task.isSuccessful()){
                             sessionManager.setLogin(true);
                             sessionManager.setUsername(email);
+
+                            ref.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    for(DataSnapshot dSnapshot:snapshot.getChildren()){
+                                        if(dSnapshot.child("email").getValue().toString().equals(email)){
+
+                                            sessionManager.setProfilename(dSnapshot.child("name").getValue().toString());
+                                            sessionManager.setImg(dSnapshot.child("img").getValue().toString());
+                                            break;
+                                        }
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                             Intent intent=new Intent(login.this, home.class);
                             startActivity(intent );
                             finish();

@@ -79,14 +79,40 @@
             android:layout_gravity="left"
             android:layout_width="200dp"
             android:layout_height="match_parent"
-
+            android:weightSum="10"
+            android:orientation="vertical"
             >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileimage"
+                android:src="@drawable/boy0"
+                android:layout_weight="2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                >
+
+
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+            <TextView
+                android:id="@+id/profilename"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="Masood Ahmad"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+
             <TextView
                 android:id="@+id/logout"
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="65dp"
                 android:text="Logout"
                 android:textSize="20dp"
                 android:textStyle="bold"

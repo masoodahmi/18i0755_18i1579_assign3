@@ -20,27 +20,35 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class home extends AppCompatActivity {
     RecyclerView rv;
     ImageView logg;
     List<homee> ls;
-    TextView logout;
+    CircleImageView profileimg;
+    TextView profilename,logout;
     DrawerLayout drwr;
     SManager sManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        profileimg=findViewById(R.id.profileimage);
+        profilename=findViewById(R.id.profilename);
 
         drwr = findViewById(R.id.drwr);
         sManager = new SManager(getApplicationContext());
+
         BottomNavigationView bottomnav=findViewById(R.id.botmnav);
         bottomnav.setOnNavigationItemSelectedListener(navListener);
-
+        profilename.setText(sManager.getProfilename());
+        Picasso.get().load(sManager.getImg()).into(profileimg);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmntcont,new homefragment()).commit();
         logout=findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +56,8 @@ public class home extends AppCompatActivity {
             public void onClick(View v) {
                 sManager.setLogin(false);
                 sManager.setUsername("");
+                sManager.setProfilename("");
+                sManager.setImg("");
                 startActivity(new Intent(home.this,login.class));
                 finish();
             }
