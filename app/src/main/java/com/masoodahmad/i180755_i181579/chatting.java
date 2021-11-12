@@ -107,10 +107,6 @@ public class chatting extends AppCompatActivity {
                                                     sManager.getUsername().equals(d.child("user1").getValue().toString()))
 
                             ){
-                                Date time=new Date();
-                                SimpleDateFormat adf=new SimpleDateFormat("HH:mm");
-                                String t= adf.format(time);
-                                ref.child(d.getKey()).child("time").setValue(t);
                                 found = true;
                                 ref.child(d.getKey()).child("text").setValue(entermsg.getText().toString());
                                 entermsg.setText("");
@@ -121,14 +117,13 @@ public class chatting extends AppCompatActivity {
 
                             found = false;
 
-
                         }else{
-                            Date time=new Date();
-                            SimpleDateFormat adf=new SimpleDateFormat("HH:mm");
-                            String t= adf.format(time);
+                            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+                            LocalDateTime now = LocalDateTime.now();
 
-                            ref.push().setValue(new user_chat(sManager.getUsername(), intent.getStringExtra("userid"), enteredmssg,t
+                            ref.push().setValue(new user_chat(sManager.getUsername(), intent.getStringExtra("userid"), entermsg.getText().toString(), now.toString()
                                     , intent.getParcelableExtra("userpic").toString()));
+                            entermsg.setText("");
                         }
                     }
                 });
