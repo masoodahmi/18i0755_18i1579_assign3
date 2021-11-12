@@ -1,22 +1,30 @@
 package com.masoodahmad.i180755_i181579;
 
 public class chatss{
-    String id, text, time, userid;
+    String src, dest, text, time;
 
-    public chatss(String id, String text, String time, String userid) {
-        this.id = id;
+    public chatss(String src, String dest, String text, String time) {
+        this.src = src;
+        this.dest = dest;
         this.text = text;
         this.time = time;
-        this.userid = userid;
     }
 
 
-    public String getId() {
-        return id;
+    public String getSrc() {
+        return src;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setSrc(String src) {
+        this.src = src;
+    }
+
+    public String getDest() {
+        return dest;
+    }
+
+    public void setDest(String dest) {
+        this.dest = dest;
     }
 
     public String getText() {
@@ -33,13 +41,5 @@ public class chatss{
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
     }
 }

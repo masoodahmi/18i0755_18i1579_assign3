@@ -44,7 +44,10 @@ public class chatting extends AppCompatActivity {
     ImageView sendbtn,chatbckbtn,callbtn;
     FirebaseDatabase database;
     DatabaseReference ref;
+    DatabaseReference ref1;
     SManager sManager;
+    Adopter3  adapter;
+    RecyclerView.LayoutManager lm;
     @SuppressLint("Range")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,30 @@ public class chatting extends AppCompatActivity {
         callbtn=findViewById(R.id.callbtn);
         database = FirebaseDatabase.getInstance();
         ref=database.getReference("user_chat");
+        ref1 = database.getReference("chatting");
+        ref1.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for (DataSnapshot d: dataSnapshot.getChildren()){
+                    System.out.println(d.child("src").getValue().toString());
+                    if(
+                            (d.child("src").getValue().toString().equals(sManager.getUsername()) && d.child("dest").getValue().toString().equals(intent.getStringExtra("userid")))
+                                    ||
+                                    (d.child("dest").getValue().toString().equals(sManager.getUsername()) && d.child("src").getValue().toString().equals(intent.getStringExtra("userid")))
+                    ){
+                        chatList.add(new chatss(d.child("src").getValue().toString(),
+                                d.child("dest").getValue().toString(),
+                                d.child("text").getValue().toString(),
+                                d.child("time").getValue().toString()));
+                    }
+
+                }
+            }
+        });
+
+
+
+
         //if (ref.getKey().equals("")){
             //ref.push().setValue(new user_chat("test", "test", "test", "test", "test"));
         //}
@@ -113,7 +140,7 @@ public class chatting extends AppCompatActivity {
                                 ref.child(d.getKey()).child("time").setValue(t);
                                 found = true;
                                 ref.child(d.getKey()).child("text").setValue(entermsg.getText().toString());
-                                entermsg.setText("");
+                                //entermsg.setText("");
                                 break;
                             }
                         }
@@ -128,8 +155,35 @@ public class chatting extends AppCompatActivity {
 
                             ref.push().setValue(new user_chat(sManager.getUsername(), intent.getStringExtra("userid"), entermsg.getText().toString(),t
                                     , intent.getParcelableExtra("userpic").toString()));
-                            entermsg.setText("");
+                            //entermsg.setText("");
                         }
+                        Date time=new Date();
+                        SimpleDateFormat adf=new SimpleDateFormat("HH:mm");
+                        String t= adf.format(time);
+                        ref1.push().setValue(new chatss(sManager.getUsername(),intent.getStringExtra("userid"), entermsg.getText().toString(), t));
+
+                        ref1.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                            @Override
+                            public void onSuccess(DataSnapshot dataSnapshot) {
+                                chatList.clear();
+                                for (DataSnapshot d: dataSnapshot.getChildren()){
+                                    if(
+                                            (d.child("src").getValue().toString().equals(sManager.getUsername()) && d.child("dest").getValue().toString().equals(intent.getStringExtra("userid")))
+                                                    ||
+                                                    (d.child("dest").getValue().toString().equals(sManager.getUsername()) && d.child("src").getValue().toString().equals(intent.getStringExtra("userid")))
+                                    ){
+                                        chatList.add(new chatss(d.child("src").getValue().toString(),
+                                                d.child("dest").getValue().toString(),
+                                                d.child("text").getValue().toString(),
+                                                d.child("time").getValue().toString()));
+                                    }
+
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+
+                        entermsg.setText("");
                     }
                 });
 
@@ -166,24 +220,21 @@ public class chatting extends AppCompatActivity {
 //
 //                    }
 //                });
-                //Adopter3  adapter =new Adopter3(chatList,chatting.this);
-                //RecyclerView.LayoutManager lm= new LinearLayoutManager( chatting.this);
-                //rv.setLayoutManager(lm);
-                //rv.setAdapter(adapter);
+
+
 
 
 
             }
         });
 
-
-
-
-        Adopter3  adapter =new Adopter3(chatList,chatting.this);
-        RecyclerView.LayoutManager lm= new LinearLayoutManager( chatting.this);
+        adapter =new Adopter3(chatList,chatting.this);
+        lm= new LinearLayoutManager( chatting.this);
         rv.setLayoutManager(lm);
         rv.setAdapter(adapter);
 
 
     }
+
+
 }
