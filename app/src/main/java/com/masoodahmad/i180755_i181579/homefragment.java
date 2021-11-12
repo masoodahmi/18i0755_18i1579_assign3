@@ -19,6 +19,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +33,12 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class homefragment extends Fragment {
+
+    FirebaseDatabase db;
+    DatabaseReference ref;
+    DatabaseReference ref1;
+    SManager sManager;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,34 +90,90 @@ public class homefragment extends Fragment {
         rv=view.findViewById(R.id.rv);
         List<homee> ls;
         ls=new ArrayList<>();
-        DbHelper dbh= new DbHelper(getContext());
-        SQLiteDatabase db=dbh.getReadableDatabase();
-        Intent previous= getActivity().getIntent();
+        db=FirebaseDatabase.getInstance();
+        ref=db.getReference("user_chat");
+        ref1=db.getReference("users");
+        sManager=new SManager(getContext());
+        ref.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
 
-        String strID = previous.getStringExtra("id");
-        System.out.println(strID);
-
-        Cursor c=db.rawQuery("select * from " + Database.user_chat.tablename +" where "+ Database.user_chat.currentuser + " = " + strID,null);
-
-        while(c.moveToNext()){
-
-            @SuppressLint("Range") byte[] arr=c.getBlob(c.getColumnIndex(Database.user_chat.pic));
-            Bitmap img= BitmapFactory.decodeByteArray(arr,0,arr.length);
-            ls.add(new homee(c.getString(c.getColumnIndex(Database.user_chat._ID)),c.getString(c.getColumnIndex(Database.user_chat.name)),
-                    c.getString(c.getColumnIndex(Database.user_chat.time)),
-                    c.getString(c.getColumnIndex(Database.user_chat.text)),
-                    img));
-            System.out.println(c.getString(c.getColumnIndex(Database.users.name)));
-
-
-        }
-
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    if(!data.child("user1").getValue().toString().equals("test")){
+                        if(data.child("user1").getValue().toString().equals(sManager.getUsername())){
+                            ref1.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                @Override
+                                public void onSuccess(DataSnapshot dataSnapshot1) {
+                                    for(DataSnapshot data1: dataSnapshot1.getChildren()) {
+                                        if(data1.child("email").getValue().toString().equals(data.child("user2").getValue().toString())){
+                                            ls.add(new homee(data1.child("name").getValue().toString()
+                                                    ,data.child("time").getValue().toString(),
+                                                    data.child("text").getValue().toString(),Uri.parse(data1.child("img").getValue().toString())));
+                                        }
 
 
+                                    }
+                                }
+                            });
+
+
+                        }
+                        else if(data.child("user2").getValue().toString().equals(sManager.getUsername())){
+                            ref1.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                @Override
+                                public void onSuccess(DataSnapshot dataSnapshot1) {
+                                    for(DataSnapshot data1: dataSnapshot1.getChildren()) {
+                                        if (data1.child("email").getValue().toString().equals(data.child("user1").getValue().toString())) {
+                                            ls.add(new homee(data1.child("name").getValue().toString()
+                                                    , data.child("time").getValue().toString(),
+                                                    data.child("text").getValue().toString(), Uri.parse(data1.child("img").getValue().toString())));
+                                        }
+
+
+                                    }
+                                }
+                            });
+
+
+
+                        }
+                    }
+                }
+            }
+        });
 
 
 
 
+
+
+
+
+
+
+
+
+//        DbHelper dbh= new DbHelper(getContext());
+//        SQLiteDatabase db=dbh.getReadableDatabase();
+//        Intent previous= getActivity().getIntent();
+//
+//        String strID = previous.getStringExtra("id");
+//        System.out.println(strID);
+//
+//        Cursor c=db.rawQuery("select * from " + Database.user_chat.tablename +" where "+ Database.user_chat.currentuser + " = " + strID,null);
+//
+//        while(c.moveToNext()){
+//
+//            @SuppressLint("Range") byte[] arr=c.getBlob(c.getColumnIndex(Database.user_chat.pic));
+//            Bitmap img= BitmapFactory.decodeByteArray(arr,0,arr.length);
+//            ls.add(new homee(c.getString(c.getColumnIndex(Database.user_chat._ID)),c.getString(c.getColumnIndex(Database.user_chat.name)),
+//                    c.getString(c.getColumnIndex(Database.user_chat.time)),
+//                    c.getString(c.getColumnIndex(Database.user_chat.text)),
+//                    img));
+//            System.out.println(c.getString(c.getColumnIndex(Database.users.name)));
+//
+//
+//        }
 
 
 

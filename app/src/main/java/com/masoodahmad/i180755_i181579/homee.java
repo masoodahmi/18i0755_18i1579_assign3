@@ -4,24 +4,17 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 
 public class homee {
-    private String id, name, time ,text ;
-    Bitmap pic;
+    private String name,time,text;
+    Uri pic;
 
-    public homee(String id, String name, String time, String text, Bitmap pic) {
-        this.id = id;
+    public homee(String name, String time, String text, Uri pic) {
+
         this.name = name;
         this.time = time;
         this.text = text;
         this.pic = pic;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -47,11 +40,11 @@ public class homee {
         this.text = text;
     }
 
-    public Bitmap getPic() {
+    public Uri getPic() {
         return pic;
     }
 
-    public void setPic(Bitmap pic) {
+    public void setPic(Uri pic) {
         this.pic = pic;
     }
 }

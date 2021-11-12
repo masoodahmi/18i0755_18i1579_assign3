@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -36,18 +38,16 @@ public class Adopter1 extends RecyclerView.Adapter<Adopter1.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adopter1.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.name.setText(ls.get(position).getName());
         holder.text.setText(ls.get(position).getText());
         holder.time.setText(ls.get(position).getTime());
-        holder.pic.setImageBitmap(ls.get(position).getPic());
+        Picasso.get().load(ls.get(position).getPic()).into(holder.pic);
         holder.openchat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(c, chatting.class);
-                intent.putExtra("userid",ls.get(holder.getAdapterPosition()).getId());
-                intent.putExtra("name", ls.get(holder.getAdapterPosition()).getName());
-                //intent.putExtra("pic",ls.get(holder.getAdapterPosition()).getPic());
+
                 c.startActivity(intent );
             }
         });
