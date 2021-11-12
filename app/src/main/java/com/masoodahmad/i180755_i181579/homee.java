@@ -4,17 +4,24 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 
 public class homee {
-    private String name,time,text;
+    private String email,name,time,text;
     Uri pic;
 
-    public homee(String name, String time, String text, Uri pic) {
-
+    public homee(String email, String name, String time, String text, Uri pic) {
+        this.email = email;
         this.name = name;
         this.time = time;
         this.text = text;
         this.pic = pic;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getName() {
         return name;

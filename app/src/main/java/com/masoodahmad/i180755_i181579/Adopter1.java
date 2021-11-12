@@ -47,7 +47,9 @@ public class Adopter1 extends RecyclerView.Adapter<Adopter1.MyViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(c, chatting.class);
-
+                intent.putExtra("userid", ls.get(holder.getAdapterPosition()).getEmail());
+                intent.putExtra("username", ls.get(holder.getAdapterPosition()).getName());
+                intent.putExtra("userpic", ls.get(holder.getAdapterPosition()).getPic());
                 c.startActivity(intent );
             }
         });
