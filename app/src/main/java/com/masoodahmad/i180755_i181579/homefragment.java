@@ -39,6 +39,9 @@ public class homefragment extends Fragment {
     DatabaseReference ref1;
     SManager sManager;
 
+    Adopter1 adapter;
+    RecyclerView.LayoutManager lm;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -90,7 +93,9 @@ public class homefragment extends Fragment {
         rv=view.findViewById(R.id.rv);
         List<homee> ls;
         ls=new ArrayList<>();
+        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         db=FirebaseDatabase.getInstance();
+
         ref=db.getReference("user_chat");
         ref1=db.getReference("users");
         sManager=new SManager(getContext());
@@ -113,6 +118,10 @@ public class homefragment extends Fragment {
 
 
                                     }
+                                    adapter =new Adopter1(ls,getContext());
+                                    lm= new LinearLayoutManager( getContext());
+                                    rv.setLayoutManager(lm);
+                                    rv.setAdapter(adapter);
                                 }
                             });
 
@@ -131,12 +140,20 @@ public class homefragment extends Fragment {
 
 
                                     }
+                                    adapter =new Adopter1(ls,getContext());
+                                    lm= new LinearLayoutManager( getContext());
+                                    rv.setLayoutManager(lm);
+                                    rv.setAdapter(adapter);
                                 }
                             });
 
 
 
                         }
+                        adapter =new Adopter1(ls,getContext());
+                        lm= new LinearLayoutManager( getContext());
+                        rv.setLayoutManager(lm);
+                        rv.setAdapter(adapter);
                     }
                 }
             }
@@ -211,8 +228,8 @@ public class homefragment extends Fragment {
 
 
 
-        Adopter1 adapter =new Adopter1(ls,getContext());
-        RecyclerView.LayoutManager lm= new LinearLayoutManager( getContext());
+        adapter =new Adopter1(ls,getContext());
+        lm= new LinearLayoutManager( getContext());
         rv.setLayoutManager(lm);
         rv.setAdapter(adapter);
 

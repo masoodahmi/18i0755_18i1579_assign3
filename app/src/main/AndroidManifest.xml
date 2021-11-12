@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.I180755_i181579">
+        android:theme="@style/Theme.I180755_i181579"
+        android:name="com.masoodahmad.i180755_i181579.Firebase">
         <activity
             android:name=".CreateProfile"
             android:exported="true" />
