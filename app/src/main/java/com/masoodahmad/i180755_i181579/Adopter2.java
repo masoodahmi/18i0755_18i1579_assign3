@@ -1,9 +1,11 @@
 package com.masoodahmad.i180755_i181579;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,6 +45,17 @@ public class Adopter2 extends RecyclerView.Adapter<Adopter2.MyViewHolder> {
         else{
             holder.civ.setImageURI(ls.get(position).getImg());
         }
+        holder.ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(c, chatting.class);
+                intent.putExtra("userid", ls.get(holder.getAdapterPosition()).getEmail());
+                intent.putExtra("username", ls.get(holder.getAdapterPosition()).getName());
+                intent.putExtra("userpic", ls.get(holder.getAdapterPosition()).getImg());
+                c.startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -54,6 +67,7 @@ public class Adopter2 extends RecyclerView.Adapter<Adopter2.MyViewHolder> {
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name,phnum;
         CircleImageView civ;
+        LinearLayout ll;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,6 +75,7 @@ public class Adopter2 extends RecyclerView.Adapter<Adopter2.MyViewHolder> {
             name=itemView.findViewById(R.id.name);
             phnum=itemView.findViewById(R.id.phnum);
             civ = itemView.findViewById(R.id.pic);
+            ll = itemView.findViewById(R.id.ll);
 
 
         }

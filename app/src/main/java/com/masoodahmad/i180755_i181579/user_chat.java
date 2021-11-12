@@ -3,24 +3,32 @@ package com.masoodahmad.i180755_i181579;
 import android.net.Uri;
 
 public class user_chat {
-    String name,text,time;
-    Uri pic;
-    Integer currentuser;
+    String user1,user2, text,time;
+    String pic;
 
-    public user_chat(String name, String text, String time, Uri pic, Integer currentuser) {
-        this.name = name;
+    public user_chat(String user1, String user2, String text, String time, String pic) {
+        this.user1 = user1;
+        this.user2 = user2;
         this.text = text;
         this.time = time;
         this.pic = pic;
-        this.currentuser = currentuser;
     }
 
-    public String getName() {
-        return name;
+
+    public String getUser1() {
+        return user1;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser1(String user1) {
+        this.user1 = user1;
+    }
+
+    public String getUser2() {
+        return user2;
+    }
+
+    public void setUser2(String user2) {
+        this.user2 = user2;
     }
 
     public String getText() {
@@ -39,19 +47,11 @@ public class user_chat {
         this.time = time;
     }
 
-    public Uri getPic() {
+    public String getPic() {
         return pic;
     }
 
-    public void setPic(Uri pic) {
+    public void setPic(String pic) {
         this.pic = pic;
-    }
-
-    public Integer getCurrentuser() {
-        return currentuser;
-    }
-
-    public void setCurrentuser(Integer currentuser) {
-        this.currentuser = currentuser;
     }
 }

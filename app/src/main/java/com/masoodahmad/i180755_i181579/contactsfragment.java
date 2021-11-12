@@ -101,7 +101,7 @@ public class contactsfragment extends Fragment {
                     System.out.println(dSnapshot.child("img").getValue().toString());
                     Uri picture = Uri.parse(dSnapshot.child("img").getValue().toString());
                     ls.add(0, new contacts(dSnapshot.child("name").getValue().toString(),
-                            dSnapshot.child("phno").getValue().toString(), picture));
+                            dSnapshot.child("phno").getValue().toString(),dSnapshot.child("email").getValue().toString(), picture));
                 }
                 adapter =new Adopter2(ls,getContext());
                 lm= new LinearLayoutManager( getContext());
@@ -170,7 +170,7 @@ public class contactsfragment extends Fragment {
                              + "://" + getContext().getResources().getResourcePackageName(R.drawable.ic_baseline_person_24)
                              + '/' + getContext().getResources().getResourceTypeName(R.drawable.ic_baseline_person_24)
                              + '/' + getContext().getResources().getResourceEntryName(R.drawable.ic_baseline_person_24) );
-                    ls.add(new contacts(name,number, imageUri));
+                    ls.add(new contacts(name,number,"",imageUri));
                     pc.close();
 
 

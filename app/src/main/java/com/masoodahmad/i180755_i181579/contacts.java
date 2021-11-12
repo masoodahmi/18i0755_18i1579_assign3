@@ -3,7 +3,18 @@ package com.masoodahmad.i180755_i181579;
 import android.net.Uri;
 
 public class contacts {
-    private String name, number;
+    private String name;
+    private String number;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private String email;
 
     public Uri getImg() {
         return img;
@@ -15,9 +26,10 @@ public class contacts {
 
     Uri img;
 
-    public contacts(String name, String number, Uri image) {
+    public contacts(String name, String number,String email, Uri image) {
         this.name = name;
         this.number = number;
+        this.email=email;
         this.img = image;
     }
 

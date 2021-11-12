@@ -1,5 +1,7 @@
 package com.masoodahmad.i180755_i181579;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,13 +12,26 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +42,9 @@ public class chatting extends AppCompatActivity {
     RecyclerView rv;
     EditText  entermsg;
     ImageView sendbtn,chatbckbtn,callbtn;
-
+    FirebaseDatabase database;
+    DatabaseReference ref;
+    SManager sManager;
     @SuppressLint("Range")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,36 +54,23 @@ public class chatting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
         chatList = new ArrayList<>();
-        Intent i = getIntent();
-        String userid = i.getStringExtra("userid");
+        sManager = new SManager(getApplicationContext());
         username = findViewById(R.id.username);
-        username.setText(i.getStringExtra("name"));
-       // Bitmap img=i.getParcelableExtra("pic");
-
+        Intent intent = getIntent();
+        username.setText(intent.getStringExtra("username"));
         entermsg = findViewById(R.id.entermsg);
+        String enteredmssg = entermsg.getText().toString();
         sendbtn = findViewById(R.id.sendbtn);
         callbtn=findViewById(R.id.callbtn);
+        database = FirebaseDatabase.getInstance();
+        ref=database.getReference("user_chat");
+        //if (ref.getKey().equals("")){
+            //ref.push().setValue(new user_chat("test", "test", "test", "test", "test"));
+        //}
         callbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DbHelper dbh= new DbHelper(chatting.this);
-                SQLiteDatabase db=dbh.getReadableDatabase();
-                Cursor c=db.rawQuery("select * from " + Database.user_chat.tablename +" where "+ Database.user_chat._ID + " = " + userid,null);
-                while (c.moveToNext()){
-                    String crruser=c.getString(c.getColumnIndex(Database.user_chat.currentuser));
-                    db.close();
-                    db=dbh.getWritableDatabase();
-                    ContentValues cv=new ContentValues();
-                    cv.put("arrow","outbound");
-                    cv.put("time",t);
-                    cv.put("userid",userid);
-                    cv.put("currentuser",crruser);
-                    db.insert(Database.calllog.tablename,null,cv);
 
-                    Intent i=new Intent(chatting.this,ongoingcall.class);
-                    i.putExtra("userid",userid);
-                    startActivity(i);
-                }
             }
         });
 
@@ -84,60 +88,87 @@ public class chatting extends AppCompatActivity {
 
 
         rv=findViewById(R.id.crv);
-
         sendbtn.setOnClickListener(new View.OnClickListener() {
+            String message = entermsg.getText().toString();
             @Override
             public void onClick(View view) {
-                DbHelper dbh= new DbHelper(chatting.this);
-                SQLiteDatabase db=dbh.getWritableDatabase();
-                ContentValues cv=new ContentValues();
-                cv.put(Database.chatss.text,entermsg.getText().toString());
-                cv.put(Database.chatss.userid,userid);
-                db.insert(Database.chatss.tablename,null,cv);
-                cv= new ContentValues();
-                cv.put(Database.user_chat.text,entermsg.getText().toString());
-                cv.put(Database.user_chat.time,t);
-                String [] arr=new String[]{userid};
+                Task<DataSnapshot> data = ref.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onSuccess(DataSnapshot dataSnapshot) {
+                        boolean found = false;
+                        for(DataSnapshot d: dataSnapshot.getChildren()){
+                            //System.out.println(ref.child(d.getValue().toString()));
+                            if (
+                                    (intent.getStringExtra("userid").equals(d.child("user1").getValue().toString()) &&
+                                            (sManager.getUsername().equals(d.child("user2").getValue().toString())))
+                                            ||
+                                            (intent.getStringExtra("userid").equals(d.child("user2").getValue().toString()) &&
+                                                    sManager.getUsername().equals(d.child("user1").getValue().toString()))
 
-                db.update(Database.user_chat.tablename,cv,"_ID=?",arr);
+                            ){
+                                found = true;
+                                ref.child(d.getKey()).child("text").setValue(entermsg.getText().toString());
+                                entermsg.setText("");
+                                break;
+                            }
+                        }
+                        if (found){
 
-                db.close();
-                dbh.close();
-                chatList.clear();
+                            found = false;
 
-                dbh= new DbHelper(chatting.this);
-                db=dbh.getReadableDatabase();
+                        }else{
+                            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+                            LocalDateTime now = LocalDateTime.now();
 
-                Cursor c=db.rawQuery("select * from " + Database.chatss.tablename +" where "+ Database.chatss.userid + " = " + userid,null);
+                            ref.push().setValue(new user_chat(sManager.getUsername(), intent.getStringExtra("userid"), enteredmssg, now.toString()
+                                    , intent.getParcelableExtra("userpic").toString()));
+                        }
+                    }
+                });
 
-                while(c.moveToNext()){
-                    chatList.add(new chatss(c.getString(c.getColumnIndex(Database.chatss._ID)),
-                            c.getString(c.getColumnIndex(Database.chatss.text)),
-                            c.getString(c.getColumnIndex(Database.chatss.time)),
-                            c.getString(c.getColumnIndex(Database.chatss.userid))));
-                }
 
-                Adopter3  adapter =new Adopter3(chatList,chatting.this);
-                RecyclerView.LayoutManager lm= new LinearLayoutManager( chatting.this);
-                rv.setLayoutManager(lm);
-                rv.setAdapter(adapter);
-                entermsg.setText("");
+
+//                ref.addValueEventListener(new ValueEventListener() {
+//                    @RequiresApi(api = Build.VERSION_CODES.O)
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                            for (DataSnapshot data : snapshot.getChildren()) {
+//                                if (
+//                                        (intent.getStringExtra("userid").equals(data.child("user1").getValue().toString()) &&
+//                                                sManager.getUsername().equals(data.child("user2").getValue().toString()))
+//                                                ||
+//                                                (intent.getStringExtra("userid").equals(data.child("user2").getValue().toString()) &&
+//                                                        sManager.getUsername().equals(data.child("user1").getValue().toString()))
+//                                ) {
+//
+//
+//                                } else {
+//                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+//                                    LocalDateTime now = LocalDateTime.now();
+//
+//                                    ref.push().setValue(new user_chat(sManager.getUsername(), intent.getStringExtra("userid"), entermsg.getText().toString().trim(), now.toString()
+//                                            , intent.getParcelableExtra("userpic").toString()));
+//
+//                                }
+//                            }
+//                        }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+                //Adopter3  adapter =new Adopter3(chatList,chatting.this);
+                //RecyclerView.LayoutManager lm= new LinearLayoutManager( chatting.this);
+                //rv.setLayoutManager(lm);
+                //rv.setAdapter(adapter);
+
 
 
             }
         });
-
-        DbHelper dbh= new DbHelper(chatting.this);
-        SQLiteDatabase db=dbh.getReadableDatabase();
-
-        Cursor c=db.rawQuery("select * from " + Database.chatss.tablename +" where "+ Database.chatss.userid + " = " + userid,null);
-
-        while(c.moveToNext()){
-            chatList.add(new chatss(c.getString(c.getColumnIndex(Database.chatss._ID)),
-                    c.getString(c.getColumnIndex(Database.chatss.text)),
-                    c.getString(c.getColumnIndex(Database.chatss.time)),
-                    c.getString(c.getColumnIndex(Database.chatss.userid))));
-        }
 
 
 
