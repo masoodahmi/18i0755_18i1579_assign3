@@ -3,10 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/SMD/18i0755_18i1579_assign3/app/src/main/res/drawable/chatbackground2.xml" value="0.1" />
+        <entry key="..\:/SMD/18i0755_18i1579_assign3/app/src/main/res/drawable/chatbckground.xml" value="0.1" />
         <entry key="..\:/SMD/18i0755_18i1579_assign3/app/src/main/res/layout/activity_chatting.xml" value="0.2" />
         <entry key="..\:/SMD/18i0755_18i1579_assign3/app/src/main/res/layout/activity_home.xml" value="0.16" />
         <entry key="..\:/SMD/18i0755_18i1579_assign3/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/SMD/18i0755_18i1579_assign3/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/SMD/18i0755_18i1579_assign3/app/src/main/res/layout/chatssrow.xml" value="0.1" />
         <entry key="..\:/SMD/18i0755_18i1579_assign3/app/src/main/res/layout/contactsrow.xml" value="0.2" />
         <entry key="..\:/SMD/18i0755_18i1579_assign3/app/src/main/res/layout/contactsrv.xml" value="0.1" />
         <entry key="..\:/SMD/18i0755_18i1579_assign3/app/src/main/res/layout/row.xml" value="0.2" />

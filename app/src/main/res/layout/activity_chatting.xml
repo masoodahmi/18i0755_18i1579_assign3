@@ -63,7 +63,8 @@
         android:layout_weight="9.8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/crv">
+        android:id="@+id/crv"
+        app:reverseLayout="true">
 
 
     </androidx.recyclerview.widget.RecyclerView>

@@ -63,6 +63,9 @@ public class home extends AppCompatActivity {
             }
         });
     }
+    Fragment homefrag = new homefragment();
+    Fragment contfrag = new contactsfragment();
+    Fragment callfrag = new callfragment();
     private BottomNavigationView.OnNavigationItemSelectedListener navListener=
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -70,13 +73,13 @@ public class home extends AppCompatActivity {
                     Fragment selectedfrag= null;
                     switch (item.getItemId()){
                         case R.id.navmsg:
-                            selectedfrag=new homefragment();
+                            selectedfrag= homefrag;
                             break;
                         case R.id.navcall:
-                            selectedfrag=new callfragment();
+                            selectedfrag= callfrag;
                             break;
                         case R.id.navpeople:
-                            selectedfrag=new contactsfragment();
+                            selectedfrag= contfrag;
                             break;
                         case R.id.navcam:
                             Intent i=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

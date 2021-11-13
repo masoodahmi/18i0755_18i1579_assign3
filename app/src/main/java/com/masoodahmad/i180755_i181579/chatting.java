@@ -85,9 +85,15 @@ public class chatting extends AppCompatActivity {
                     }
 
                 }
+                adapter =new Adopter3(chatList,getApplicationContext());
+                lm= new LinearLayoutManager( getApplicationContext());
+                lm.scrollToPosition(adapter.getItemCount()-1);
+                rv.setLayoutManager(lm);
+                rv.setAdapter(adapter);
+
             }
         });
-
+        //adapter.notifyDataSetChanged();
 
 
 
@@ -101,12 +107,16 @@ public class chatting extends AppCompatActivity {
             }
         });
 
+
+
         chatbckbtn=findViewById(R.id.chatbckbtn);
         chatbckbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(chatting.this,homefragment.class);
-                startActivity(i);
+                Intent i=new Intent(chatting.this,home.class);
+
+                //startActivity(i);
+                //overridePendingTransition(R.);
                 finish();
             }
         });
@@ -162,26 +172,6 @@ public class chatting extends AppCompatActivity {
                         String t= adf.format(time);
                         ref1.push().setValue(new chatss(sManager.getUsername(),intent.getStringExtra("userid"), entermsg.getText().toString(), t));
 
-                        ref1.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                            @Override
-                            public void onSuccess(DataSnapshot dataSnapshot) {
-                                chatList.clear();
-                                for (DataSnapshot d: dataSnapshot.getChildren()){
-                                    if(
-                                            (d.child("src").getValue().toString().equals(sManager.getUsername()) && d.child("dest").getValue().toString().equals(intent.getStringExtra("userid")))
-                                                    ||
-                                                    (d.child("dest").getValue().toString().equals(sManager.getUsername()) && d.child("src").getValue().toString().equals(intent.getStringExtra("userid")))
-                                    ){
-                                        chatList.add(new chatss(d.child("src").getValue().toString(),
-                                                d.child("dest").getValue().toString(),
-                                                d.child("text").getValue().toString(),
-                                                d.child("time").getValue().toString()));
-                                    }
-
-                                }
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
 
                         entermsg.setText("");
                     }
@@ -230,8 +220,35 @@ public class chatting extends AppCompatActivity {
 
         adapter =new Adopter3(chatList,chatting.this);
         lm= new LinearLayoutManager( chatting.this);
+        lm.scrollToPosition(adapter.getItemCount()-1);
         rv.setLayoutManager(lm);
         rv.setAdapter(adapter);
+
+        ref1.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                chatList.clear();
+                for(DataSnapshot d: snapshot.getChildren()){
+                    if(
+                            (d.child("src").getValue().toString().equals(sManager.getUsername()) && d.child("dest").getValue().toString().equals(intent.getStringExtra("userid")))
+                                    ||
+                                    (d.child("dest").getValue().toString().equals(sManager.getUsername()) && d.child("src").getValue().toString().equals(intent.getStringExtra("userid")))
+                    ){
+                        chatList.add(new chatss(d.child("src").getValue().toString(),
+                                d.child("dest").getValue().toString(),
+                                d.child("text").getValue().toString(),
+                                d.child("time").getValue().toString()));
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
     }
