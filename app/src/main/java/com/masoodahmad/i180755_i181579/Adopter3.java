@@ -36,6 +36,7 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
 
 
         if (sManger.getUsername().equals(ls.get(position).getSrc())){
+
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)holder.sc.getLayoutParams();
             params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             holder.sc.setLayoutParams(params);
@@ -43,6 +44,20 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
             params = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
             params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             holder.rl.setLayoutParams(params);
+
+            if(ls.get(position).getText().equals("Screen shot has been taken")){
+                params = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
+                params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                holder.rl.setLayoutParams(params);
+
+                RelativeLayout.LayoutParams params1 = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
+                params1.setMargins(0,0,320,0);
+                holder.sc.setBackgroundResource(R.drawable.chatbackground3);
+                holder.sc.setTextSize(10);
+
+
+
+            }
         }
         else{
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
@@ -53,20 +68,35 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
             holder.sc.setLayoutParams(params);
 
             holder.sc.setBackgroundResource(R.drawable.chatbackground2);
+
+            if(ls.get(position).getText().equals("Screen shot has been taken")){
+                params = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
+                params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                holder.rl.setLayoutParams(params);
+
+                RelativeLayout.LayoutParams params1 = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
+                params1.setMargins(320,0,0,0);
+                holder.sc.setBackgroundResource(R.drawable.chatbackground3);
+                holder.sc.setTextSize(10);
+
+
+            }
+
+
         }
-        if(ls.get(position).getText().equals("Screen shot has been taken")){
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
-            params.addRule(RelativeLayout.CENTER_IN_PARENT);
-            holder.rl.setLayoutParams(params);
-
-            RelativeLayout.LayoutParams params1 = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
-            params1.setMargins(0,0,320,0);
-            holder.sc.setBackgroundResource(R.drawable.chatbackground3);
-            holder.sc.setTextSize(10);
-
-
-
-        }
+//        if(ls.get(position).getText().equals("Screen shot has been taken")){
+//            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
+//            params.addRule(RelativeLayout.CENTER_IN_PARENT);
+//            holder.rl.setLayoutParams(params);
+//
+//            RelativeLayout.LayoutParams params1 = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
+//            params1.setMargins(0,0,320,0);
+//            holder.sc.setBackgroundResource(R.drawable.chatbackground3);
+//            holder.sc.setTextSize(10);
+//
+//
+//
+//        }
 
         holder.sc.setText(ls.get(position).getText());
 
