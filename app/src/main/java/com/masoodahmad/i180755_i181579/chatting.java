@@ -49,6 +49,8 @@ public class chatting extends ScreenshotDetectionActivity {
     SManager sManager;
     Adopter3  adapter;
     RecyclerView.LayoutManager lm;
+    Intent intent;
+    Integer count=1;
     @SuppressLint("Range")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class chatting extends ScreenshotDetectionActivity {
         chatList = new ArrayList<>();
         sManager = new SManager(getApplicationContext());
         username = findViewById(R.id.username);
-        Intent intent = getIntent();
+        intent = getIntent();
         username.setText(intent.getStringExtra("username"));
         entermsg = findViewById(R.id.entermsg);
         String enteredmssg = entermsg.getText().toString();
@@ -130,6 +132,7 @@ public class chatting extends ScreenshotDetectionActivity {
             String message = entermsg.getText().toString();
             @Override
             public void onClick(View view) {
+
                 Task<DataSnapshot> data = ref.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
@@ -230,6 +233,7 @@ public class chatting extends ScreenshotDetectionActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 chatList.clear();
+
                 for(DataSnapshot d: snapshot.getChildren()){
                     if(
                             (d.child("src").getValue().toString().equals(sManager.getUsername()) && d.child("dest").getValue().toString().equals(intent.getStringExtra("userid")))
@@ -240,6 +244,7 @@ public class chatting extends ScreenshotDetectionActivity {
                                 d.child("dest").getValue().toString(),
                                 d.child("text").getValue().toString(),
                                 d.child("time").getValue().toString()));
+
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -254,9 +259,17 @@ public class chatting extends ScreenshotDetectionActivity {
 
     }
 
+
+
     @Override
     public void onScreenCaptured(String path) {
-        Toast.makeText(this, "screenshot lia gya h", Toast.LENGTH_SHORT).show();
+       count++;
+       if(count%2==0) {
+           ref1.push().setValue(new chatss(sManager.getUsername(), intent.getStringExtra("userid")
+                   , "Screen shot has been taken", "test"));
+       }
+
+
     }
 
     @Override
