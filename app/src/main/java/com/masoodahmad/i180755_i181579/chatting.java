@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class chatting extends AppCompatActivity {
+public class chatting extends ScreenshotDetectionActivity {
     TextView username;
     List<chatss> chatList;
     RecyclerView rv;
@@ -251,6 +252,16 @@ public class chatting extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onScreenCaptured(String path) {
+        Toast.makeText(this, "screenshot lia gya h", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onScreenCapturedWithDeniedPermission() {
+        Toast.makeText(this, "Please grant read external storage permission for screenshot detection", Toast.LENGTH_SHORT).show();
     }
 
 

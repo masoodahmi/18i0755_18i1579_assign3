@@ -7,18 +7,24 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.accessibilityservice.AccessibilityService;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.akexorcist.screenshotdetection.ScreenshotDetectionDelegate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
@@ -28,6 +34,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class home extends AppCompatActivity {
+
     RecyclerView rv;
     ImageView logg;
     List<homee> ls;
@@ -91,4 +98,53 @@ public class home extends AppCompatActivity {
                     return true;
                 }
             };
+
+
+
+
+//    @Override
+//    public void onScreenCaptured(String path) {
+//        Toast.makeText(this, "screenshot lia gya h", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onScreenCapturedWithDeniedPermission() {
+//        Toast.makeText(this, "Please grant read external storage permission for screenshot detection", Toast.LENGTH_SHORT).show();
+//    }
+
+
+
+    //private ScreenshotDetectionDelegate screenshotDetectionDelegate = new ScreenshotDetectionDelegate(this, this);
+
+
+
+//    companion object {
+//        private Integer REQUEST_CODE_READ_EXTERNAL_STORAGE_PERMISSION = 3009;
+//    }
+//
+//
+//
+////    private String TAG="home" ;
+////
+////    @Override
+////    public void onStart() {
+////        super.onStart();
+////        screenshotDetectionDelegate.startScreenshotDetection();
+////    }
+////
+////    @Override
+////    public void onStop() {
+////        super.onStop();
+////        screenshotDetectionDelegate.stopScreenshotDetection();
+////    }
+////
+////    @Override
+////    public void onScreenCaptured(@NonNull String s) {
+////        Log.d(TAG,"take action");
+////    }
+////
+////    @Override
+////    public void onScreenCapturedWithDeniedPermission() {
+////        Log.d(TAG,"no");
+
 }
