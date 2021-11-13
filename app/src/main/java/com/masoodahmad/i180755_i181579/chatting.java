@@ -116,7 +116,7 @@ public class chatting extends ScreenshotDetectionActivity {
             public void onClick(View view) {
                 Intent i=new Intent(chatting.this,home.class);
 
-                //startActivity(i);
+                startActivity(i);
                 //overridePendingTransition(R.);
                 finish();
             }
