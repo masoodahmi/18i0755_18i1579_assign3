@@ -230,7 +230,6 @@ public class homefragment extends Fragment {
 
 
 
-
         adapter =new Adopter1(ls,getContext());
         lm= new LinearLayoutManager( getContext());
         rv.setLayoutManager(lm);

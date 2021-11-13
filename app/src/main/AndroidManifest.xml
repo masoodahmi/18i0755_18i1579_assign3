@@ -32,7 +32,9 @@
         <activity
             android:name=".login"
             android:exported="true"
-            android:label="log" />
+            android:label="log" >
+
+        </activity>
         <activity
             android:name=".SignUp"
             android:exported="true" />
@@ -44,6 +46,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

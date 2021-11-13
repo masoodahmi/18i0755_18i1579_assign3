@@ -59,5 +59,6 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.akexorcist:screenshot-detection:1.0.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    androidTestImplementation 'androidx.test:rules:1.4.0-alpha05'
+    androidTestImplementation 'androidx.test:rules:1.4.1-alpha03'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.0-alpha03'
 }
