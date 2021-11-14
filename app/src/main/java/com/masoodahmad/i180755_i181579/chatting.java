@@ -70,6 +70,7 @@ public class chatting extends ScreenshotDetectionActivity {
     Call call;
     ImageView camerabtn;
     Uri receivedimg;
+    ArrayList<Uri> imgList;
     @SuppressLint("Range")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class chatting extends ScreenshotDetectionActivity {
         username = findViewById(R.id.username);
         activestatus = findViewById(R.id.activestatus);
         intent = getIntent();
+
         username.setText(intent.getStringExtra("username"));
         entermsg = findViewById(R.id.entermsg);
         String enteredmssg = entermsg.getText().toString();
@@ -93,8 +95,13 @@ public class chatting extends ScreenshotDetectionActivity {
         camerabtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent gallery= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult( gallery , 100);
+                //imgList = new ArrayList<>();
+                //imgList.clear();
+                Intent gallery= new Intent();
+                gallery.setType("image/*");
+                gallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                gallery.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult( Intent.createChooser(gallery, "Select Image(s)") , 100);
             }
         });
         database = FirebaseDatabase.getInstance();
@@ -422,26 +429,35 @@ public class chatting extends ScreenshotDetectionActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK ){
-            receivedimg= data.getData();
-            File f = new File(String.valueOf(receivedimg));
-            String imageName = f.getName();
-            System.out.println(imageName);
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
-            StorageReference strRef= FirebaseStorage.getInstance().getReference();
-            strRef=strRef.child("pictures_chat/"+now.toString()+".jpg");
-            strRef.putFile(receivedimg).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Task<Uri> t=taskSnapshot.getStorage().getDownloadUrl();
-                    t.addOnSuccessListener(new OnSuccessListener<Uri>() {
+            if(data.getClipData() != null){
+                int totalimgs = data.getClipData().getItemCount();
+                for (int i = 0; i < totalimgs; i ++){
+                    receivedimg = data.getClipData().getItemAt(i).getUri();
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    StorageReference strRef = FirebaseStorage.getInstance().getReference();
+                    strRef = strRef.child("pictures_chat/" + now.toString() + ".jpg");
+                    strRef.putFile(receivedimg).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onSuccess(Uri uri) {
-                            Date time=new Date();
-                            SimpleDateFormat adf=new SimpleDateFormat("HH:mm");
-                            String t= adf.format(time);
-                            String pic=uri.toString();
-                            ref1.push().setValue(new chatss(sManager.getUsername(), intent.getStringExtra("userid"), pic, t));
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Task<Uri> t = taskSnapshot.getStorage().getDownloadUrl();
+                            t.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Date time = new Date();
+                                    SimpleDateFormat adf = new SimpleDateFormat("HH:mm");
+                                    String t = adf.format(time);
+                                    String pic = uri.toString();
+                                    ref1.push().setValue(new chatss(sManager.getUsername(), intent.getStringExtra("userid"), pic, t));
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(), "Failed!!!!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -449,16 +465,43 @@ public class chatting extends ScreenshotDetectionActivity {
                             Toast.makeText(getApplicationContext(), "Failed!!!!", Toast.LENGTH_SHORT).show();
                         }
                     });
-
-
-
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getApplicationContext(), "Failed!!!!", Toast.LENGTH_SHORT).show();
-                }
-            });
+            }
+            else {
+                receivedimg = data.getData();
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+                StorageReference strRef = FirebaseStorage.getInstance().getReference();
+                strRef = strRef.child("pictures_chat/" + now.toString() + ".jpg");
+                strRef.putFile(receivedimg).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Task<Uri> t = taskSnapshot.getStorage().getDownloadUrl();
+                        t.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Date time = new Date();
+                                SimpleDateFormat adf = new SimpleDateFormat("HH:mm");
+                                String t = adf.format(time);
+                                String pic = uri.toString();
+                                ref1.push().setValue(new chatss(sManager.getUsername(), intent.getStringExtra("userid"), pic, t));
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getApplicationContext(), "Failed!!!!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Failed!!!!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
         }
 

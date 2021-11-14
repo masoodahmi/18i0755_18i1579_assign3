@@ -75,6 +75,7 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
                     holder.sc.setVisibility(View.GONE);
                     holder.si.setVisibility(View.VISIBLE);
                     Picasso.get().load(ls.get(position).getText()).into(holder.si);
+                    holder.ct.setText("");
                 };
             }
         }
@@ -106,10 +107,9 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
                     holder.si.setVisibility(View.VISIBLE);
                     Picasso.get().load(ls.get(position).getText()).into(holder.si);
                     holder.si.setBackgroundResource(R.drawable.chatbackground2);
+                    holder.ct.setText("");
                 };
             }
-
-
         }
 //        if(ls.get(position).getText().equals("Screen shot has been taken")){
 //            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
