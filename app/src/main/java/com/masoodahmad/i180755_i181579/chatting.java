@@ -164,41 +164,50 @@ public class chatting extends ScreenshotDetectionActivity {
         callbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i=new Intent(chatting.this,ongoingcall.class);
+                i.putExtra("userid",intent.getStringExtra("userid"));
+                i.putExtra("username",intent.getStringExtra("username"));
+                i.putExtra("userpic",intent.getStringExtra("userpic"));
+                startActivity(i);
+
+
+
+
                 // Instantiate a SinchClient
-                android.content.Context context = getApplicationContext();
-                SinchClient sinchClient = Sinch.getSinchClientBuilder().context(context)
-                        .applicationKey("6dabf6e9-7336-491f-a1ad-ba7e1ecb8122")
-                        .environmentHost("ocra.api.sinch.com")
-                        .userId("jakjkaka")
-                        .build();
-
-                // Specify the client capabilities.
-                sinchClient.setSupportManagedPush(true);
-                sinchClient.startListeningOnActiveConnection();
-
-                sinchClient.getCallClient().addCallClientListener(new SinchCallClientListener() {
-
-                });
-
-
-                // Add the client listener that handles client state changes.
-
-
-                // Start the client
-                sinchClient.start();
-
-                CallClient call = sinchClient.getCallClient();
-                call.callPhoneNumber("+923032241969");
-
-
-
-                // Use the CallClient to place and receive calls
-
-                // Stop listening for incoming calls.
-                sinchClient.stopListeningOnActiveConnection();
-
-                // Stop the client when the calling functionality is no longer needed.
-                sinchClient.terminateGracefully();
+//                android.content.Context context = getApplicationContext();
+//                SinchClient sinchClient = Sinch.getSinchClientBuilder().context(context)
+//                        .applicationKey("6dabf6e9-7336-491f-a1ad-ba7e1ecb8122")
+//                        .environmentHost("ocra.api.sinch.com")
+//                        .userId("jakjkaka")
+//                        .build();
+//
+//                // Specify the client capabilities.
+//                sinchClient.setSupportManagedPush(true);
+//                sinchClient.startListeningOnActiveConnection();
+//
+//                sinchClient.getCallClient().addCallClientListener(new SinchCallClientListener() {
+//
+//                });
+//
+//
+//                // Add the client listener that handles client state changes.
+//
+//
+//                // Start the client
+//                sinchClient.start();
+//
+//                CallClient call = sinchClient.getCallClient();
+//                call.callPhoneNumber("+923032241969");
+//
+//
+//
+//                // Use the CallClient to place and receive calls
+//
+//                // Stop listening for incoming calls.
+//                sinchClient.stopListeningOnActiveConnection();
+//
+//                // Stop the client when the calling functionality is no longer needed.
+//                sinchClient.terminateGracefully();
 
             }
         });

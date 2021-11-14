@@ -14,14 +14,27 @@
         <TextView
             android:padding="10dp"
             android:id="@+id/singlechat"
-            android:background="@drawable/chatbckground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:background="@drawable/chatbckground"
             android:text="sdnfijsdbvhsdsmndbdjasbdiuahsdiuashdioasdhoiasdbcyuwebfiuwdabvy"
             android:textSize="20dp"
             android:textColor="@color/white"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:layout_marginBottom="0dp"
+            />
+        <TextView
+            android:layout_below="@+id/singlechat"
+           android:layout_alignRight="@+id/singlechat"
+            android:layout_marginRight="10dp"
+            android:paddingBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/msgtime"
+            android:text="20:21"
+            android:textColor="@color/white"
+
+            />
 
         <ImageView
             android:id="@+id/showimg"

@@ -9,10 +9,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -20,6 +25,8 @@ public class ongoingcall extends AppCompatActivity {
     ImageView ec;
     CircleImageView civ;
     TextView name;
+    FirebaseDatabase db;
+    DatabaseReference ref;
     @SuppressLint("Range")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +38,17 @@ public class ongoingcall extends AppCompatActivity {
 
         Intent i=getIntent();
         String userid=i.getStringExtra("userid");
-        DbHelper dbh= new DbHelper(ongoingcall.this);
-        SQLiteDatabase db=dbh.getReadableDatabase();
-        Cursor c=db.rawQuery("select * from " + Database.user_chat.tablename +" where "+ Database.user_chat._ID + " = " + userid,null);
-        while (c.moveToNext()){
-            @SuppressLint("Range") byte[] arr=c.getBlob(c.getColumnIndex(Database.user_chat.pic));
-            Bitmap img= BitmapFactory.decodeByteArray(arr,0,arr.length);
-            civ.setImageBitmap(img);
-            name.setText(c.getString(c.getColumnIndex(Database.user_chat.name)));
+        String username=i.getStringExtra("username");
+        String userpic=i.getStringExtra("userpic");
+        System.out.println(userpic);
+//        db=FirebaseDatabase.getInstance();
+//        ref=db.getReference("users");
+//
 
 
-        }
+        name.setText(username);
+        //civ.setImageURI(Uri.parse(userpic));
+        Picasso.get().load(userpic).into(civ);
         ec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

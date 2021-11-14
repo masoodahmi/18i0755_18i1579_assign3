@@ -37,7 +37,7 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull Adopter3.MyViewHolder holder, int position) {
-
+        holder.ct.setText(ls.get(position).getTime());
         holder.si.setVisibility(View.GONE);
         holder.sc.setVisibility(View.VISIBLE);
         if (sManger.getUsername().equals(ls.get(position).getSrc())){
@@ -46,6 +46,7 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
             params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             holder.sc.setLayoutParams(params);
             holder.sc.setBackgroundResource(R.drawable.chatbckground);
+
             params = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
             params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             holder.rl.setLayoutParams(params);
@@ -59,7 +60,7 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
                 params = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
                 params.addRule(RelativeLayout.CENTER_IN_PARENT);
                 holder.rl.setLayoutParams(params);
-
+                holder.ct.setText("");
                 RelativeLayout.LayoutParams params1 = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
                 params1.setMargins(0,0,320,0);
                 holder.sc.setBackgroundResource(R.drawable.chatbackground3);
@@ -91,7 +92,7 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
                 params = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
                 params.addRule(RelativeLayout.CENTER_IN_PARENT);
                 holder.rl.setLayoutParams(params);
-
+                holder.ct.setText("");
                 RelativeLayout.LayoutParams params1 = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
                 params1.setMargins(320,0,0,0);
                 holder.sc.setBackgroundResource(R.drawable.chatbackground3);
@@ -137,13 +138,14 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
         return position;
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView sc;
+        TextView sc,ct;
         RelativeLayout rl;
         ImageView si;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             rl = itemView.findViewById(R.id.rl);
             sc=itemView.findViewById(R.id.singlechat);
+            ct=itemView.findViewById(R.id.msgtime);
 
 
             si = itemView.findViewById(R.id.showimg);

@@ -19,6 +19,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -30,7 +35,11 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class callfragment extends Fragment {
-
+    FirebaseDatabase db;
+    DatabaseReference ref;
+    DatabaseReference ref1;
+    SManager sManager;
+    MyRvAdopter adapter;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -85,33 +94,97 @@ public class callfragment extends Fragment {
         rv=view.findViewById(R.id.rvv);
         List<callhist> ls;
         ls=new ArrayList<>();
+        db=FirebaseDatabase.getInstance();
 
-        Intent previous= getActivity().getIntent();
+        ref=db.getReference("callog");
+        ref1=db.getReference("users");
+        sManager=new SManager(getContext());
 
-        String strID = previous.getStringExtra("id");
-        System.out.println(strID);
-        DbHelper dbh= new DbHelper(getContext());
-        SQLiteDatabase db=dbh.getReadableDatabase();
-        Cursor c=db.rawQuery("select * from " + Database.calllog.tablename +" where "+ Database.calllog.currentuser + " = " + strID,null);
-        while(c.moveToNext()){
 
-            @SuppressLint("Range") String ss=c.getString(c.getColumnIndex(Database.calllog.userid));
-            System.out.println("sdasdk"+ss);
-            Cursor c1=db.rawQuery("select * from " + Database.user_chat.tablename +" where "+ Database.user_chat._ID + " = " + ss,null);
-            while (c1.moveToNext()){
-                @SuppressLint("Range") String name=c1.getString(c1.getColumnIndex(Database.user_chat.name));
-                System.out.println(name);
-                @SuppressLint("Range") byte[] arr=c1.getBlob(c1.getColumnIndex(Database.user_chat.pic));
-                Bitmap img= BitmapFactory.decodeByteArray(arr,0,arr.length);
-                ls.add(new callhist(name,c.getString(c.getColumnIndex(Database.calllog.time)),
-                        c.getString(c.getColumnIndex(Database.calllog.arrow)),img));
+
+
+
+        String strID = sManager.getUsername();
+        ref.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    if(data.child("src").getValue().toString().equals(strID)){
+                        ref1.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                            @Override
+                            public void onSuccess(DataSnapshot dataSnapshot1) {
+                                for(DataSnapshot data1: dataSnapshot1.getChildren()){
+                                    if(data1.child("email").getValue().toString().equals(data.child("dest").getValue().toString())){
+                                        ls.add(new callhist(data1.child("name").getValue().toString(),data.child("time").getValue().toString(),
+                                                Uri.parse(data1.child("img").getValue().toString())));
+
+
+                                    }
+
+
+                                }
+
+                                adapter =new MyRvAdopter(ls,getContext());
+                                RecyclerView.LayoutManager lm= new LinearLayoutManager( getContext());
+                                rv.setLayoutManager(lm);
+                                rv.setAdapter(adapter);
+                            }
+                        });
+                    }
+                    else if(data.child("dest").getValue().toString().equals(strID)){
+                        ref1.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                            @Override
+                            public void onSuccess(DataSnapshot dataSnapshot1) {
+                                for(DataSnapshot data1: dataSnapshot1.getChildren()){
+                                    if(data1.child("email").getValue().toString().equals(data.child("src").getValue().toString())){
+                                        ls.add(new callhist(data1.child("name").getValue().toString(),data.child("time").getValue().toString(),
+                                                Uri.parse(data1.child("img").getValue().toString())));
+
+
+                                    }
+
+
+                                }
+
+                                adapter =new MyRvAdopter(ls,getContext());
+                                RecyclerView.LayoutManager lm= new LinearLayoutManager( getContext());
+                                rv.setLayoutManager(lm);
+                                rv.setAdapter(adapter);
+                            }
+                        });
+                    }
+
+
+                }
+
 
             }
+        });
 
 
 
-
-        }
+//        System.out.println(strID);
+//        DbHelper dbh= new DbHelper(getContext());
+//        SQLiteDatabase db=dbh.getReadableDatabase();
+//        Cursor c=db.rawQuery("select * from " + Database.calllog.tablename +" where "+ Database.calllog.currentuser + " = " + strID,null);
+//        while(c.moveToNext()){
+//
+//            @SuppressLint("Range") String ss=c.getString(c.getColumnIndex(Database.calllog.userid));
+//            System.out.println("sdasdk"+ss);
+//            Cursor c1=db.rawQuery("select * from " + Database.user_chat.tablename +" where "+ Database.user_chat._ID + " = " + ss,null);
+//            while (c1.moveToNext()){
+//                @SuppressLint("Range") String name=c1.getString(c1.getColumnIndex(Database.user_chat.name));
+//                System.out.println(name);
+//                @SuppressLint("Range") byte[] arr=c1.getBlob(c1.getColumnIndex(Database.user_chat.pic));
+//                Uri img;
+//                //ls.add(new callhist(name,c.getString(c.getColumnIndex(Database.calllog.time)),img));
+//
+//            }
+//
+//
+//
+//
+//        }
 
 
 
@@ -150,10 +223,6 @@ public class callfragment extends Fragment {
 //        ls.add(new callhist("Carol Clark","friday","lost - ",miss,imageUri));
 
 
-        MyRvAdopter adapter =new MyRvAdopter(ls,getContext());
-        RecyclerView.LayoutManager lm= new LinearLayoutManager( getContext());
-        rv.setLayoutManager(lm);
-        rv.setAdapter(adapter);
 
 
         return view;

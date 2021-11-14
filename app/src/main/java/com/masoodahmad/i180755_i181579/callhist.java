@@ -5,12 +5,12 @@ import android.net.Uri;
 
 public class callhist {
     private String name, time ,arrow ;
-    Bitmap pic;
+    Uri pic;
 
-    public callhist(String name, String time, String arrow, Bitmap pic) {
+    public callhist(String name, String time, Uri pic) {
         this.name = name;
         this.time = time;
-        this.arrow = arrow;
+
         this.pic = pic;
     }
 
@@ -38,11 +38,11 @@ public class callhist {
         this.arrow = arrow;
     }
 
-    public Bitmap getPic() {
+    public Uri getPic() {
         return pic;
     }
 
-    public void setPic(Bitmap pic) {
+    public void setPic(Uri pic) {
         this.pic = pic;
     }
 }

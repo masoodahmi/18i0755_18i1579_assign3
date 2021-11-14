@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -35,13 +37,14 @@ public class MyRvAdopter extends RecyclerView.Adapter<MyRvAdopter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyRvAdopter.MyViewHolder holder, int position) {
         holder.name.setText(ls.get(position).getName());
         holder.time.setText(ls.get(position).getTime());
-        holder.pic.setImageBitmap(ls.get(position).getPic());
-        if(ls.get(holder.getAdapterPosition()).getArrow().equals("outbound")){
-            holder.arro.setImageResource(R.drawable.outarrow);
-        }
-        else{
-            holder.arro.setImageResource(R.drawable.missarrow);
-        }
+        Picasso.get().load(ls.get(position).getPic()).into(holder.pic);
+        //holder.pic.setImageBitmap(ls.get(position).getPic());
+//        if(ls.get(holder.getAdapterPosition()).getArrow().equals("outbound")){
+//            holder.arro.setImageResource(R.drawable.outarrow);
+//        }
+//        else{
+//            holder.arro.setImageResource(R.drawable.missarrow);
+//        }
 
     }
 
