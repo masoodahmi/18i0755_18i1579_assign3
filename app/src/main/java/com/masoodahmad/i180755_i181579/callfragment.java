@@ -116,6 +116,7 @@ public class callfragment extends Fragment {
                                 for(DataSnapshot data1: dataSnapshot1.getChildren()){
                                     if(data1.child("email").getValue().toString().equals(data.child("dest").getValue().toString())){
                                         ls.add(new callhist(data1.child("name").getValue().toString(),data.child("time").getValue().toString(),
+                                                data.child("src").getValue().toString(),data.child("dest").getValue().toString(),
                                                 Uri.parse(data1.child("img").getValue().toString())));
 
 
@@ -138,8 +139,8 @@ public class callfragment extends Fragment {
                                 for(DataSnapshot data1: dataSnapshot1.getChildren()){
                                     if(data1.child("email").getValue().toString().equals(data.child("src").getValue().toString())){
                                         ls.add(new callhist(data1.child("name").getValue().toString(),data.child("time").getValue().toString(),
+                                                data.child("src").getValue().toString(),data.child("dest").getValue().toString(),
                                                 Uri.parse(data1.child("img").getValue().toString())));
-
 
                                     }
 

@@ -4,13 +4,14 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 
 public class callhist {
-    private String name, time ,arrow ;
+    private String name, time ,src, dest;
     Uri pic;
 
-    public callhist(String name, String time, Uri pic) {
+    public callhist(String name, String time, String src, String dest, Uri pic) {
         this.name = name;
         this.time = time;
-
+        this.src = src;
+        this.dest = dest;
         this.pic = pic;
     }
 
@@ -30,12 +31,20 @@ public class callhist {
         this.time = time;
     }
 
-    public String getArrow() {
-        return arrow;
+    public String getSrc() {
+        return src;
     }
 
-    public void setArrow(String arrow) {
-        this.arrow = arrow;
+    public void setSrc(String src) {
+        this.src = src;
+    }
+
+    public String getDest() {
+        return dest;
+    }
+
+    public void setDest(String dest) {
+        this.dest = dest;
     }
 
     public Uri getPic() {

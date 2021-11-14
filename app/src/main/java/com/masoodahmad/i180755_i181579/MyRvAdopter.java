@@ -19,9 +19,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MyRvAdopter extends RecyclerView.Adapter<MyRvAdopter.MyViewHolder> {
     List<callhist> ls;
     Context c;
+    SManager sManger;
     public MyRvAdopter(List<callhist> ls, Context c) {
         this.c=c;
         this.ls=ls;
+        sManger=new SManager(c);
 
     }
 
@@ -38,6 +40,14 @@ public class MyRvAdopter extends RecyclerView.Adapter<MyRvAdopter.MyViewHolder> 
         holder.name.setText(ls.get(position).getName());
         holder.time.setText(ls.get(position).getTime());
         Picasso.get().load(ls.get(position).getPic()).into(holder.pic);
+        if(sManger.getUsername().equals(ls.get(position).getSrc())){
+            holder.arro.setImageResource(R.drawable.outarrow);
+        }
+        else{
+            holder.arro.setImageResource(R.drawable.missarrow);
+        }
+
+
         //holder.pic.setImageBitmap(ls.get(position).getPic());
 //        if(ls.get(holder.getAdapterPosition()).getArrow().equals("outbound")){
 //            holder.arro.setImageResource(R.drawable.outarrow);
