@@ -38,7 +38,7 @@ import java.util.Date;
 import java.util.List;
 
 public class chatting extends ScreenshotDetectionActivity {
-    TextView username;
+    TextView username,activestatus;
     List<chatss> chatList;
     RecyclerView rv;
     EditText  entermsg;
@@ -46,6 +46,7 @@ public class chatting extends ScreenshotDetectionActivity {
     FirebaseDatabase database;
     DatabaseReference ref;
     DatabaseReference ref1;
+    DatabaseReference ref2;
     SManager sManager;
     Adopter3  adapter;
     RecyclerView.LayoutManager lm;
@@ -54,6 +55,7 @@ public class chatting extends ScreenshotDetectionActivity {
     @SuppressLint("Range")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         Date time=new Date();
         SimpleDateFormat adf=new SimpleDateFormat("HH:mm");
         String t= adf.format(time);
@@ -62,6 +64,7 @@ public class chatting extends ScreenshotDetectionActivity {
         chatList = new ArrayList<>();
         sManager = new SManager(getApplicationContext());
         username = findViewById(R.id.username);
+        activestatus = findViewById(R.id.activestatus);
         intent = getIntent();
         username.setText(intent.getStringExtra("username"));
         entermsg = findViewById(R.id.entermsg);
@@ -71,6 +74,23 @@ public class chatting extends ScreenshotDetectionActivity {
         database = FirebaseDatabase.getInstance();
         ref=database.getReference("user_chat");
         ref1 = database.getReference("chatting");
+        ref2 = database.getReference("users");
+//        status("online");
+        ref2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot d: snapshot.getChildren()){
+                    if(d.child("email").getValue().toString().equals(intent.getStringExtra("username"))){
+                        activestatus.setText(d.child("status").getValue().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         ref1.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
@@ -258,6 +278,7 @@ public class chatting extends ScreenshotDetectionActivity {
 
 
     }
+
 
 
 

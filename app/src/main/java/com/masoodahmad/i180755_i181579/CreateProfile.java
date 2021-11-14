@@ -67,7 +67,7 @@ public class CreateProfile extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 dp=uri.toString();
                                 ref.push().setValue(new users(email,pass,name.getText().toString().trim(),age.getText().toString().trim()
-                                        ,gender.getText().toString().trim(),dp,phno.getText().toString().trim()));
+                                        ,gender.getText().toString().trim(),dp,phno.getText().toString().trim(),"offline"));
                                 startActivity(new Intent(getApplicationContext(),login.class));
                                 finish();
                             }
