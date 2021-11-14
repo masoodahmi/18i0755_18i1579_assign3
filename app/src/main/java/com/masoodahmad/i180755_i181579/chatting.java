@@ -61,6 +61,7 @@ public class chatting extends ScreenshotDetectionActivity {
     DatabaseReference ref;
     DatabaseReference ref1;
     DatabaseReference ref2;
+    DatabaseReference ref3;
     SManager sManager;
     Adopter3  adapter;
     RecyclerView.LayoutManager lm;
@@ -100,6 +101,7 @@ public class chatting extends ScreenshotDetectionActivity {
         ref=database.getReference("user_chat");
         ref1 = database.getReference("chatting");
         ref2 = database.getReference("users");
+        ref3=database.getReference("callog");
 //        status("online");
         ref2.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
@@ -164,11 +166,18 @@ public class chatting extends ScreenshotDetectionActivity {
         callbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Date time=new Date();
+                SimpleDateFormat adf=new SimpleDateFormat("HH:mm");
+                String t= adf.format(time);
+                ref3.push().setValue(new calllog(sManager.getUsername(),intent.getStringExtra("userid"),
+                        t));
                 Intent i=new Intent(chatting.this,ongoingcall.class);
                 i.putExtra("userid",intent.getStringExtra("userid"));
                 i.putExtra("username",intent.getStringExtra("username"));
                 i.putExtra("userpic",intent.getStringExtra("userpic"));
                 startActivity(i);
+
 
 
 
