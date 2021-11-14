@@ -1,14 +1,18 @@
 package com.masoodahmad.i180755_i181579;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -34,7 +38,8 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull Adopter3.MyViewHolder holder, int position) {
 
-
+        holder.si.setVisibility(View.GONE);
+        holder.sc.setVisibility(View.VISIBLE);
         if (sManger.getUsername().equals(ls.get(position).getSrc())){
 
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)holder.sc.getLayoutParams();
@@ -45,6 +50,11 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
             params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             holder.rl.setLayoutParams(params);
 
+            params = (RelativeLayout.LayoutParams)holder.si.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            holder.si.setLayoutParams(params);
+            holder.si.setBackgroundResource(R.drawable.chatbackground4);
+
             if(ls.get(position).getText().equals("Screen shot has been taken")){
                 params = (RelativeLayout.LayoutParams)holder.rl.getLayoutParams();
                 params.addRule(RelativeLayout.CENTER_IN_PARENT);
@@ -54,9 +64,17 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
                 params1.setMargins(0,0,320,0);
                 holder.sc.setBackgroundResource(R.drawable.chatbackground3);
                 holder.sc.setTextSize(10);
+                //holder.sc.setVisibility(View.GONE);
 
 
 
+            }
+            else if(ls.get(position).getText().length() > 40){
+                if(ls.get(position).getText().substring(0, 39).equals("https://firebasestorage.googleapis.com/")){
+                    holder.sc.setVisibility(View.GONE);
+                    holder.si.setVisibility(View.VISIBLE);
+                    Picasso.get().load(ls.get(position).getText()).into(holder.si);
+                };
             }
         }
         else{
@@ -80,6 +98,14 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
                 holder.sc.setTextSize(10);
 
 
+            }
+            else if(ls.get(position).getText().length() > 40){
+                if(ls.get(position).getText().substring(0, 39).equals("https://firebasestorage.googleapis.com/")){
+                    holder.sc.setVisibility(View.GONE);
+                    holder.si.setVisibility(View.VISIBLE);
+                    Picasso.get().load(ls.get(position).getText()).into(holder.si);
+                    holder.si.setBackgroundResource(R.drawable.chatbackground2);
+                };
             }
 
 
@@ -113,12 +139,14 @@ public class Adopter3 extends RecyclerView.Adapter<Adopter3.MyViewHolder> {
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView sc;
         RelativeLayout rl;
+        ImageView si;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             rl = itemView.findViewById(R.id.rl);
             sc=itemView.findViewById(R.id.singlechat);
 
 
+            si = itemView.findViewById(R.id.showimg);
 
 
         }

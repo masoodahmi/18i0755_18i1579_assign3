@@ -97,13 +97,21 @@
 
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="0.1"
+        android:layout_marginBottom="10dp"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_weight="0.1"
-        android:layout_marginBottom="20dp"
+        android:layout_weight="0.99"
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
         android:background="@drawable/chattop"
+        android:id="@+id/chatarea"
 
         >
         <ImageView
@@ -124,18 +132,19 @@
             android:textSize="15dp"
             android:background="@drawable/chattop"
             android:textColorHint="@color/white"/>
-        <ImageView
-            android:id="@+id/sendbtn"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/circle"
-            android:src="@drawable/ic_baseline_send_24"
-            android:padding="11dp"
 
-            />
+        <ImageView
+        android:id="@+id/camerabtn"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_round_photo_camera_24"
+        android:padding="11dp"
+            android:paddingRight="5dp"
+
+        />
 
 
 
@@ -143,8 +152,20 @@
 
 
     </RelativeLayout>
+        <ImageView
+            android:layout_alignRight="@+id/chatarea"
+            android:id="@+id/sendbtn"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/circle"
+            android:src="@drawable/ic_baseline_send_24"
+            android:padding="11dp"
 
-
+            />
+    </LinearLayout>
 
 
 </LinearLayout>
