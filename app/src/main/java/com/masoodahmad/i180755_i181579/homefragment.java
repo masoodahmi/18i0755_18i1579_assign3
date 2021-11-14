@@ -15,9 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +40,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class homefragment extends Fragment {
-
+    List<homee> ls;
     FirebaseDatabase db;
     DatabaseReference ref;
     DatabaseReference ref1;
@@ -94,7 +98,25 @@ public class homefragment extends Fragment {
         View view=inflater.inflate(R.layout.homerv, container, false);
         RecyclerView rv;
         rv=view.findViewById(R.id.rv);
-        List<homee> ls;
+
+        EditText searchhome=view.findViewById(R.id.searchhome);
+        searchhome.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filterout(s.toString());
+            }
+        });
+
         ls=new ArrayList<>();
         //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         db=FirebaseDatabase.getInstance();
@@ -243,4 +265,21 @@ public class homefragment extends Fragment {
 
         return view;
     }
+
+    private void filterout(String s){
+        List<homee> filtered = new ArrayList<>();
+        for(homee item: ls){
+            if(item.getName().toLowerCase().contains(s.toLowerCase())){
+                filtered.add(item);
+            }
+
+        }
+        adapter.filteredList(filtered);
+
+
+
+
+    }
+
+
 }

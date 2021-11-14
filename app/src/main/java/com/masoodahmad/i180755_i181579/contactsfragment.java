@@ -17,9 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.ContactsContract;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -88,6 +91,29 @@ public class contactsfragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.contactsrv, container, false);
         rv=view.findViewById(R.id.rvvv);
+        EditText searchcontacts=view.findViewById(R.id.searchcontacts);
+        searchcontacts.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filterout(s.toString());
+            }
+        });
+
+
+
+
+
+
         ls=new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
@@ -129,6 +155,20 @@ public class contactsfragment extends Fragment {
     }
 
 
+    private void filterout(String s){
+        List<contacts> filtered = new ArrayList<>();
+        for(contacts item: ls){
+            if(item.getName().toLowerCase().contains(s.toLowerCase())){
+                filtered.add(item);
+            }
+
+        }
+        adapter.filteredList(filtered);
+
+
+
+
+    }
 
 
     private void checkPermission(){

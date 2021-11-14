@@ -64,6 +64,13 @@ public class Adopter2 extends RecyclerView.Adapter<Adopter2.MyViewHolder> {
         return ls.size();
     }
 
+
+    public void filteredList(List<contacts> filterdList){
+        ls=filterdList;
+        notifyDataSetChanged();
+    }
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name,phnum;
         CircleImageView civ;
