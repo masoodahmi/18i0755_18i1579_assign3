@@ -29,6 +29,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sinch.android.rtc.Sinch;
+import com.sinch.android.rtc.SinchClient;
+import com.sinch.android.rtc.calling.Call;
+import com.sinch.android.rtc.calling.CallClient;
+import com.sinch.android.rtc.calling.CallClientListener;
+import com.sinch.android.rtc.calling.CallListener;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -52,6 +58,7 @@ public class chatting extends ScreenshotDetectionActivity {
     RecyclerView.LayoutManager lm;
     Intent intent;
     Integer count=1;
+    Call call;
     @SuppressLint("Range")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +83,25 @@ public class chatting extends ScreenshotDetectionActivity {
         ref1 = database.getReference("chatting");
         ref2 = database.getReference("users");
 //        status("online");
+        ref2.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot snapshot) {
+                for (DataSnapshot d: snapshot.getChildren()){
+                    if(d.child("email").getValue().toString().equals(intent.getStringExtra("userid"))){
+                        System.out.println("please");
+                        activestatus.setText(d.child("status").getValue().toString());
+                        break;
+                    }
+                }
+            }
+        });
         ref2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot d: snapshot.getChildren()){
-                    if(d.child("email").getValue().toString().equals(intent.getStringExtra("username"))){
+                    if(d.child("email").getValue().toString().equals(intent.getStringExtra("userid"))){
                         activestatus.setText(d.child("status").getValue().toString());
+                        break;
                     }
                 }
             }
@@ -126,6 +146,41 @@ public class chatting extends ScreenshotDetectionActivity {
         callbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Instantiate a SinchClient
+                android.content.Context context = getApplicationContext();
+                SinchClient sinchClient = Sinch.getSinchClientBuilder().context(context)
+                        .applicationKey("6dabf6e9-7336-491f-a1ad-ba7e1ecb8122")
+                        .environmentHost("ocra.api.sinch.com")
+                        .userId("jakjkaka")
+                        .build();
+
+                // Specify the client capabilities.
+                sinchClient.setSupportManagedPush(true);
+                sinchClient.startListeningOnActiveConnection();
+
+                sinchClient.getCallClient().addCallClientListener(new SinchCallClientListener() {
+
+                });
+
+
+                // Add the client listener that handles client state changes.
+
+
+                // Start the client
+                sinchClient.start();
+
+                CallClient call = sinchClient.getCallClient();
+                call.callPhoneNumber("+923032241969");
+
+
+
+                // Use the CallClient to place and receive calls
+
+                // Stop listening for incoming calls.
+                sinchClient.stopListeningOnActiveConnection();
+
+                // Stop the client when the calling functionality is no longer needed.
+                sinchClient.terminateGracefully();
 
             }
         });
@@ -299,4 +354,30 @@ public class chatting extends ScreenshotDetectionActivity {
     }
 
 
+    private class SinchCallClientListener implements CallClientListener {
+        @Override
+        public void onIncomingCall(CallClient callClient, Call call) {
+
+        }
+    }
+
+    private class SinchCallListener implements CallListener{
+
+        @Override
+        public void onCallProgressing(Call call) {
+            Toast.makeText(getApplicationContext(), "Ringing...", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCallEstablished(Call call) {
+            Toast.makeText(getApplicationContext(), "Call Established", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCallEnded(Call endcall) {
+            Toast.makeText(getApplicationContext(), "Call Ended", Toast.LENGTH_SHORT).show();
+            call = null;
+            endcall.hangup();
+        }
+    }
 }
